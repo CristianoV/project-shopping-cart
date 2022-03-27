@@ -12,8 +12,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+async function cartItemClickListener(event) {
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -27,8 +27,8 @@ function createCartItemElement({ sku, name, salePrice }) {
 const colocandoCarrinho = async (identificacao) => {
   const { id, title, price } = await fetchItem(identificacao);
   const li = createCartItemElement({ sku: id, name: title, salePrice: price });
-  const carinho = document.querySelector('.cart__items');
-  carinho.appendChild(li);
+  const carrinho = document.querySelector('.cart__items');
+  carrinho.appendChild(li);
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -38,25 +38,33 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  const botão = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  section.appendChild(botão);
-  botão.addEventListener('click', async () => {
-    colocandoCarrinho(sku);
-}); return section;
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  return section;
 }
+
+const eventoNoBotão = async () => {
+  const todosOsItens = document.querySelectorAll('.item');
+  todosOsItens.forEach((elemento) => {
+  const sku = elemento.querySelector('.item__sku');
+  const feijão = elemento.querySelector('.item__add');
+  feijão.addEventListener('click', () => {
+  colocandoCarrinho(sku.innerText);
+  });
+});
+};
 
 const colocandoProduto = async () => {
   const produto = await fetchProducts('computador');
-  const lista = produto.reduce((acc, element) => {
+  produto.reduce((acc, element) => {
     acc.sku = element.id;
     acc.name = element.title;
     acc.image = element.thumbnail;
     const teste = createProductItemElement(acc);
     const adiciona = document.querySelector('.items');
     adiciona.appendChild(teste);
-    return {};    
+    return {};
 }, {});
-  return lista;
+  eventoNoBotão();
 };
 
 function getSkuFromProductItem(item) {
@@ -65,4 +73,4 @@ function getSkuFromProductItem(item) {
 
 window.onload = () => {
   colocandoProduto();
- };
+};
