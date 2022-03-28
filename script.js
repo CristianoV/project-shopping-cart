@@ -13,14 +13,13 @@ function createCustomElement(element, className, innerText) {
 }
 
 const valorCarrinho = async (id) => {
+  const preco = document.querySelector('.total-price');
   const item = await fetchItem(id);
   if (typeof item.price === 'number') {
-    document.querySelector('.total-price')
-    .innerHTML = `<h1>Subtotal: R$ ${item.price}</h1>`;
+    preco.innerHTML = `<h1>Subtotal: R$ ${item.price}</h1>`;
   } else {
     const numero = Math.random() * (100 - 0) + 0;
-    document.querySelector('.total-price')
-    .innerHTML = `<h1>Subtotal: R$ ${numero}</h1>`;
+    preco.innerHTML = `<h1>Subtotal: R$ ${numero}</h1>`;
   }
 };
 
@@ -104,7 +103,7 @@ const loading = () => {
 };
 
 const colocandoProduto = async () => {
-  const produto = await fetchProducts('computador');
+  const produto = await fetchProducts('Computador');
   const adiciona = document.querySelector('.items');
   document.querySelector('.loading').remove();
   produto.reduce((acc, element) => {
@@ -118,9 +117,11 @@ const colocandoProduto = async () => {
 };
 
 const limpandoCarrinho = () => {
+const preco = document.querySelector('.total-price');
 const todosOsItens = document.querySelectorAll('.cart__item');
 todosOsItens.forEach((acc) => {
   acc.remove();
+  preco.innerHTML = '<h1>Subtotal: R$ 0.00</h1>';
   });
   saveCartItems();
 };
