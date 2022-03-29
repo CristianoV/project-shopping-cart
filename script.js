@@ -103,7 +103,6 @@ const loading = () => {
 };
 
 const colocandoProduto = async () => {
-  // const produto = await fetchProducts();
   const produto = await fetchProducts('Computador');
   const adiciona = document.querySelector('.items');
   document.querySelector('.loading').remove();
