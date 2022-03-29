@@ -1,15 +1,13 @@
 const fetchProducts = async (QUERY) => {
-  const url = `https://api.mercadolibre.com/sites/MLB/search?q=${QUERY}`;
-
   try {
-  // if (QUERY === 'computador') {
+    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${QUERY}`;
     const result = await fetch(url);
     const data = await result.json();
     const resultado = await data.results;
     return await resultado;
-  // }
-  } catch (error) {
-    return `Algo deu errado :( \n${error}`;
+  } catch (Error) {
+    console.log(Error.message);
+    return Error;
   }
 };
 

@@ -19,11 +19,7 @@ describe('2 - Teste a função fecthItem', () => {
   it('Teste se o retorno da função fetchProducts com o argumento "computador" é uma estrutura de dados igual ao objeto computadorSearch, que já está importado no arquivo.', async () => {
     await expect(typeof fetchProducts('Computador')).toEqual (typeof computadorSearch);
   })
-  it('Teste se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url.', () => {
-    try {
-      await fetchProducts();
-    } catch (error) {
-      expect(error).toEqual(new Error(`Algo deu errado :( \n${error}`));
-    }
+  it('Teste se, ao chamar a função fetchProducts sem argumento, retorna um erro com a mensagem: You must provide an url.', async () => {
+    expect(await fetchProducts()).toEqual(new Error('You must provide an url'));
   })
 });
