@@ -6,7 +6,6 @@ const fetchProducts = async (QUERY) => {
     const resultado = await data.results;
     return await resultado;
   } catch (Error) {
-    console.log(Error.message);
     return Error;
   }
 };
