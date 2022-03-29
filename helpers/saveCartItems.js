@@ -1,10 +1,5 @@
 const saveCartItems = (elemento) => {
-  if (elemento) {
-    window.localStorage.setItem('cartItems', elemento);
-  } else {
-    const ol = document.querySelector('.cart__items');
-    window.localStorage.setItem('cartItems', ol.innerHTML);
-  }
+    window.localStorage.setItem('cartItems', elemento.innerHTML);
 };
 
 if (typeof module !== 'undefined') {
