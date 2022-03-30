@@ -37,20 +37,19 @@ const Subtotal = (valor) => {
     valorCarrinho(valor);
   }
 };
-//
 
 async function cartItemClickListener(event) {
   if (event) {
     event.target.remove();
     console.log(event.target);
     // Subtotal(event.target.innerText);
-    saveCartItems(ol);
+    saveCartItems(ol.innerHTML);
   } else {
-    const item = await document.querySelectorAll('.cart__item');
+    const item = document.querySelectorAll('.cart__item');
     item.forEach((elemento) => {
       elemento.addEventListener('click', () => {
         elemento.remove();
-        saveCartItems(ol);
+        saveCartItems(ol.innerHTML);
         // Subtotal(elemento.innerText);
       });
     });
@@ -70,7 +69,7 @@ const colocandoCarrinho = async (identificacao) => {
   const li = createCartItemElement({ sku: id, name: title, salePrice: price });
   const carrinho = document.querySelector('.cart__items');
   carrinho.appendChild(li);
-  saveCartItems(ol);
+  saveCartItems(ol.innerHTML);
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -125,20 +124,25 @@ todosOsItens.forEach((acc) => {
   acc.remove();
   preco.innerHTML = '<h1>Subtotal: R$ 0.00</h1>';
   });
-  saveCartItems(ol);
+  saveCartItems(ol.innerHTML);
 };
 
 const botao = document.querySelector('.empty-cart');
 botao.addEventListener('click', (limpandoCarrinho));
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
+
+const jogandoNoHTML = () => {
+  const save = getSavedCartItems();
+  ol.innerHTML = save; 
+};
 
 window.onload = () => {
   loading();
   colocandoProduto();
-  getSavedCartItems();
+  jogandoNoHTML();
   cartItemClickListener();
   Subtotal();
 };
